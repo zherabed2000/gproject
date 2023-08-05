@@ -1,0 +1,193 @@
+<?php $__env->startSection('content'); ?>
+
+<style>
+		a.btn.btn-primary {
+			background: #7971D9;
+		}
+
+		a.btn.btn-light.fw-bold.text-gray-800.text-hover-primary.fs-7 {
+			margin-left: 29px;
+
+
+		}
+	</style>
+
+
+
+
+
+<div class="col-lg-6 col-xl-6 px-8 mb-5 mb-xl-10">
+														<!--begin::Contacts-->
+														<div class="card card-flush" id="kt_contacts_list">
+															<!--begin::Card header-->
+															<div class="card-header pt-7" id="kt_contacts_list_header">
+																<!--begin::Form-->
+																<form class="d-flex align-items-center position-relative w-100 m-0" autocomplete="off"
+																action="<?php echo e(route('addFrind')); ?>" method="get">
+																	<!--begin::Icon-->
+																	<!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+																	<span class="svg-icon svg-icon-3 svg-icon-gray-500 position-absolute top-50 ms-5 translate-middle-y">
+																		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																			<rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
+																				transform="rotate(45 17.0365 15.1223)" fill="currentColor"></rect>
+																			<path
+																				d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+																				fill="currentColor"></path>
+																		</svg>
+																	</span>
+																	<!--end::Svg Icon-->
+																	<!--end::Icon-->
+																	<!--begin::Input-->
+																	<input type="text" class="form-control form-control-solid ps-13" name="search" value=""
+																		placeholder="Add a friend">
+																	<!--end::Input-->
+																</form>
+																<!--end::Form-->
+															</div>
+															<!--end::Card header-->
+															<!--begin::Card body-->
+															<div class="card-body pt-5" id="kt_contacts_list_body">
+																<!--begin::List-->
+																<div class="scroll-y me-n5 pe-5 h-300px h-xl-auto" data-kt-scroll="true"
+																	data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+																	data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_contacts_list_header"
+																	data-kt-scroll-wrappers="#kt_content, #kt_contacts_list_body"
+																	data-kt-scroll-stretch="#kt_contacts_list, #kt_contacts_main" data-kt-scroll-offset="5px"
+																	style="max-height: 772px;">
+
+																	<?php if( count($users) > 0 ): ?>
+
+																	<?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+																	<?php $__currentLoopData = $frinds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $frind): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+																
+																	<?php if($user->id == $frind->friend_id  ): ?>
+																	<!--begin::User-->
+																	<div class="d-flex flex-stack py-4">
+																		<!--begin::Details-->
+																		<div class="d-flex align-items-center">
+																			<!--begin::Avatar-->
+																			<div class="symbol symbol-40px symbol-circle">
+																				<img alt="Pic" src="assets/media/avatars/300-6.jpg">
+																			</div>
+																			<!--end::Avatar-->
+																			<!--begin::Details-->
+																			<div class="ms-4">
+																				<a href="#"
+																					class="fs-6 fw-bold text-gray-900 text-hover-primary mb-2"> <?php echo e($user->name); ?> </a>
+																				<div class="fw-semibold fs-7 text-muted">  <?php echo e($user->email); ?> </div>
+
+																				<div class="badge badge-success">  Frind </div>
+
+																				
+																				<?php
+
+																				$us = \App\Models\Friend::where('friend_id' , $user->id)->select('id','is_blocked')->first();
+
+																				//$idd = $us->id ;
+																				$is_blocked = $us->is_blocked ?? 0;
+																				// dd($us->is_blocked);
+																				?>
+																				<?php if($is_blocked == 1 ): ?>
+																				<div class="badge badge-danger">  Bloked </div>
+																				<?php endif; ?>
+
+																				
+																			</div>
+																			<!--end::Details-->
+																		</div>
+																			<td class="text-end">
+																				<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click"
+																					data-kt-menu-placement="bottom-end">Actions
+																					<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+																					<span class="svg-icon svg-icon-5 m-0">
+																						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																							<path
+																								d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z"
+																								fill="currentColor" />
+																						</svg>
+																					</span>
+																					<!--end::Svg Icon--></a>
+																				<!--begin::Menu-->
+																				<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
+																					data-kt-menu="true">
+																					<!--begin::Menu item-->
+																					
+																					<!--end::Menu item-->
+																					<!--begin::Menu item-->
+																					<div class="menu-item px-3">
+																						<a href="<?php echo e(route('blokedFrind', $user->id )); ?>" class="menu-link px-3" data-kt-ecommerce-category-filter="delete_row"><i class="fa-solid fa-ban"></i>Block</a>
+																					</div>
+																					<!--end::Menu item-->
+																				</div>
+																				<!--end::Menu-->
+																			</td>
+
+																		<!--end::Details-->
+																	</div>
+																	<!--end::User-->
+
+																	<?php endif; ?>
+																	<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+																	<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+																	<?php else: ?>
+																              <div class="alert alert-danger">
+																			  No Finds Found
+																			  </div>
+																	<?php endif; ?>
+																	
+																				
+																			<!--end::Menu-->
+																		</td>
+																		<!--end::Details-->
+																	</div>
+																	<!--end::User-->
+																</div>
+																<!--end::List-->
+															</div>
+															<!--end::Card body-->
+													
+</div>
+
+
+
+		<!--begin::Content-->
+		<div class="col-xl-6  px-8 mb-5 mb-xl-10">
+											<!--begin::Card-->
+											<div class="card card-flush h-lg-100" id="kt_contacts_main">
+												<!--begin::Card body-->
+												<div class="card-body p-0">
+													<!--begin::Wrapper-->
+													<div class="card-px text-center py-20 my-10">
+														<!--begin::Title-->
+														<h2 class="fs-2x fw-bold mb-10">Welcome to the Add A Friend App</h2>
+														<!--end::Title-->
+														<!--begin::Description-->
+														<p class="text-gray-400 fs-4 fw-semibold mb-10">It's time to expand our contacts.
+														<br>Kickstart your contacts growth by adding a your next contact.</p>
+														<!--end::Description-->
+														<!--begin::Action-->
+														<a href="<?php echo e(route('addFrindNew')); ?>" class="btn btn-primary">Add New Friend</a>
+														<!--end::Action-->
+													</div>
+													<!--end::Wrapper-->
+													<!--begin::Illustration-->
+													<div class="text-center px-4">
+														<img class="mw-100 mh-300px" alt="" src="assets/media/illustrations/sketchy-1/5.png">
+													</div>
+													<!--end::Illustration-->
+												</div>
+												<!--end::Card body-->
+								
+										
+	</div>
+
+
+
+	
+
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\note\resources\views/addfrind.blade.php ENDPATH**/ ?>
