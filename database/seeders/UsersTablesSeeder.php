@@ -1,9 +1,10 @@
 <?php
+namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
-use App\User;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 class UsersTablesSeeder extends Seeder
 {
     /**
@@ -13,19 +14,19 @@ class UsersTablesSeeder extends Seeder
      */
     public function run()
     {
-       $user1 =  User::create([
+       User::create([
             'name'    => 'Admin',
             'email'    => 'admin@gmail.com',
             'password'   =>  Hash::make('123456'),
-            'remember_token' =>  str_random(10),
+            'remember_token' =>  Str::random(10),
             'is_admin' => 1
         ]);
 
-        $user2 = User::create([
+        User::create([
             'name'    => 'user',
             'email'    => 'user@gmail.com',
             'password'   =>  Hash::make('123456'),
-            'remember_token' =>  str_random(10),
+            'remember_token' => Str::random(10),
             'is_admin' => 0
         ]);
     }
