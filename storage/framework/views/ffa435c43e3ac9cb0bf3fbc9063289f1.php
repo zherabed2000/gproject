@@ -1686,8 +1686,7 @@
                                     </div>
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
-                                    <div class="menu-item px-5"
-                                        data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                    <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                                         data-kt-menu-placement="left-start">
                                         <a href="#" class="menu-link px-5">
                                             <span class="menu-title">My Subscription</span>
@@ -5851,45 +5850,6 @@
                             <h1 class="mb-3">Search Users</h1>
                             <div class="text-muted fw-semibold fs-5">Invite Collaborators To Your Project</div>
 
-
-                            <?php
-                            // عند الضغط على زر المشاركة
-                            if (isset($_POST['share_notes'])) {
-                                $friend_name = $_POST['friend_name'];
-
-                                // اتصال بقاعدة البيانات (يجب استبدال القيم بالمعلومات الخاصة بقاعدة البيانات الخاصة بك)
-                                $db_host = 'localhost';
-                                $db_user = 'اroot ';
-                                $db_pass = '';
-                                $db_name = 'اnotes';
-
-                                $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
-
-                                if (!$conn) {
-                                    die('فشل الاتصال بقاعدة البيانات: ' . mysqli_connect_error());
-                                }
-
-                                // استعلام البحث عن الاسم في قاعدة البيانات
-                                $query = "SELECT * FROM notes WHERE user_name = '$friend_name'";
-                                $result = mysqli_query($conn, $query);
-
-                                if (mysqli_num_rows($result) > 0) {
-                                    // عرض النتائج إذا وجدت
-                                    echo '<h2>الملاحظات المشتركة مع ' . $friend_name . '</h2>';
-                                    echo '<ul>';
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        echo '<li>' . $row['note_content'] . '</li>';
-                                    }
-                                    echo '</ul>';
-                                } else {
-                                    // إشعار إذا لم يتم العثور على نتائج
-                                    echo '<p>لم يتم العثور على ملاحظات مشتركة مع ' . $friend_name . '</p>';
-                                }
-
-                                // إغلاق اتصال قاعدة البيانات
-                                mysqli_close($conn);
-                            }
-                            ?>
 </body>
 
 </html>

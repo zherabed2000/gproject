@@ -48,5 +48,5 @@ class CategoriesController extends Controller
 
         return redirect()->back();
     }
-        
+
 }

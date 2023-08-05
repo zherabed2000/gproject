@@ -62,7 +62,7 @@
                                                                         <!--begin::Symbol-->
                                                                         <div
                                                                             class="symbol symbol-30px symbol-circle me-3">
-                                                                          
+
                                                                         </div>
                                                                         <!--end::Symbol-->
                                                                         <!--begin::Info-->
@@ -93,7 +93,7 @@
                                                                                             d="M8.82343 12.0064L8.08852 14.3348C7.8655 15.0414 8.46151 15.7366 9.19388 15.6242L11.8974 15.2092C12.4642 15.1222 12.6916 14.4278 12.2861 14.0223L9.98595 11.7221C9.61452 11.3507 8.98154 11.5055 8.82343 12.0064Z"
                                                                                             fill="currentColor"/>
                                                                                     </svg>
-                                                                                </span>                                                                                
+                                                                                </span>
                                                                                 <!--end::Svg Icon-->
                                                                             </a>
                                                                         </div>
@@ -111,7 +111,7 @@
                                                             </div>
                                                             <!--end::Body-->
                                                             <!--begin::Footer-->
-                                                            
+
                                                             <div class="d-flex flex-stack mt-auto bd-highlight">
                                                                 <!--begin::Actions-->
                                                                 <a href="#" class="btn btn-light "
@@ -207,7 +207,7 @@
                                                                         <!--end::Svg Icon-->
                                                                     </button>
                                                                 </form>
-                                                                
+
 
                                                                 <form style="display: inline-block;" method="POST"
                                                                       action="{{ URL('/note/delete/'.$note->id) }}">

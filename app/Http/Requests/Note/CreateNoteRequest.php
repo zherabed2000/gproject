@@ -26,7 +26,8 @@ class CreateNoteRequest extends FormRequest
         return [
             'name' => 'required|string',
             'category_id' => 'required|numeric',
-            'content' => 'required|string'
+            'content' => 'required|string',
+            'color' => 'required|string'
         ];
     }
 

@@ -25,7 +25,7 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-            'description' => 'required|string'
+            'description' => 'required|string',
         ];
     }
 
@@ -36,7 +36,7 @@ class CreateCategoryRequest extends FormRequest
             'title.string' => 'Title must be a string',
 
             'description.required' => 'Description is required',
-            'description.string' => 'Description must be a string'
+            'description.string' => 'Description must be a string',
         ];
     }
 }
