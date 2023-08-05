@@ -82,14 +82,23 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
+    Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
 
+        Route::get('/', [UsersController::class, 'index'])->name('index');
 
-    Route::get('/users', [UsersController::class, 'index'])->name('users.index');
-    Route::get('/add-users', function () {
-        return view('add-users');
+        Route::group(['prefix' => 'create'], function () {
+            Route::get('/', [UsersController::class, 'create'])->name('create');
+            Route::post('/', [UsersController::class, 'store'])->name('store');
+        });
+        Route::group(['prefix' => '{id}'], function () {
+            Route::get('/edit', [UsersController::class, 'edit'])->name('edit');
+            Route::put('/edit', [UsersController::class, 'update'])->name('update');
+            Route::delete('/', [UsersController::class, 'destroy'])->name('destroy');
+        });
     });
-    Route::post('/users/store', [UsersController::class, 'store'])->name('users.store');
-    Route::post('/users/delete/{id}', [UsersController::class, 'destroy']);
+
+
+
 
 
 });

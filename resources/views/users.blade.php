@@ -3,17 +3,7 @@
 
 @section('content')
 
-<style>
-    .row {
-  --bs-gutter-x: -2.5rem;
-  --bs-gutter-y: 0;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: calc(-1 * var(--bs-gutter-y));
-  margin-right: calc(-.5 * var(--bs-gutter-x));
-  margin-left: calc(-.5 * var(--bs-gutter-x));
-}
-</style>
+
 
 
     <!--begin::user-->

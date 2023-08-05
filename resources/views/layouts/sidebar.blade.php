@@ -112,7 +112,7 @@
                 @if (auth()->user()->is_admin == 0)
                     <div class="menu-item menu-accordion">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="/users">
+                        <a class="menu-link" href="{{ route('users.index') }}">
                                             <span class="menu-icon">
                                                 <!--begin::Svg Icon | path: icons/duotune/communication/com005.svg-->
                                                 <span class="svg-icon svg-icon-2">
