@@ -2996,7 +2996,7 @@
 
 								</div>
 								<!--end:Menu item-->
-
+						 
 								<!--begin:Menu item-->
 								<div class="menu-item menu-accordion">
 									<!--begin:Menu link-->
@@ -3184,7 +3184,7 @@
                                                 <div class="card-body pt-5">
                                                     <!--begin::Form-->
                                                     <form  action="<?php echo e('/note/update/'.$note->id); ?>" method="POST"
-
+                                                        
                                                         class="form fv-plugins-bootstrap5 fv-plugins-framework">
                                                         <?php echo csrf_field(); ?>
 
@@ -10680,5 +10680,4 @@
     </body>
     <!--end::Body-->
 
-</html>
-<?php /**PATH /Users/moahemdabosido/Desktop/Projects/gproject/resources/views/EditNote.blade.php ENDPATH**/ ?>
+</html><?php /**PATH /Users/moahemdabosido/Desktop/Projects/gproject/resources/views/EditNote.blade.php ENDPATH**/ ?>

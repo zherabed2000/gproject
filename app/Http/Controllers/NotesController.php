@@ -5,13 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Note\CreateNoteRequest;
 use App\Models\Category;
 use App\Models\Note;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class NotesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('index')->with('notes', Note::select('*')->get());
+        $search = $request->query('search');
+        $notes = Note::select('*')
+            ->where('name', 'LIKE', "%{$search}%")
+            ->orWhere('content', 'LIKE', "%{$search}%")
+            ->get();
+        return view('index')->with('notes', $notes);
     }
 
     public function trash()
@@ -79,7 +85,7 @@ class NotesController extends Controller
             'name' => $request['name'],
             'category_id' => $request['category_id'],
             'content' => $request['content'] ,
-           
+
         ]);
 
         if ($result)
