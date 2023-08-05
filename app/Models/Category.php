@@ -8,16 +8,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasFactory , SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'title',
-        'description' ,
-         'color'
+        'description',
+        'color'
     ];
 
     public function notes()
     {
         return $this->hasMany(Note::class);
+    }
+
+    public function scopeFilter($q)
+    {
+        if (request()->filled('q') && request('q') != "") {
+            $q->where('title', 'like', '%' . request('q') . '%');
+        }
     }
 }

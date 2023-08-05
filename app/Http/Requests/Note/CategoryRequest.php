@@ -4,7 +4,7 @@ namespace App\Http\Requests\Note;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCategoryRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CreateCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -24,6 +24,7 @@ class CreateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
+            'color' => 'required',
             'title' => 'required|string',
             'description' => 'required|string',
         ];
@@ -32,6 +33,8 @@ class CreateCategoryRequest extends FormRequest
     public function messages()
     {
         return [
+            'color.required' => 'Color is required',
+
             'title.required' => 'Title is required',
             'title.string' => 'Title must be a string',
 

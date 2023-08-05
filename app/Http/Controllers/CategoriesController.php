@@ -2,51 +2,78 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Note\CreateCategoryRequest;
+use App\Http\Requests\Note\CategoryRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Mockery\Exception;
 
 class CategoriesController extends Controller
 {
     public function index()
     {
-        return view('categories')->with('categories', Category::select('*')->get());
+        $data['categories'] = Category::query()->filter()->latest()->get();
+        return view('categories.index', $data);
     }
 
-    public function store(CreateCategoryRequest $request)
+    public function create()
     {
-        $title = $request['title'];
-        $description = $request['description'];
+        return view('categories.create');
+    }
 
-        $category = Category::create([
-            'title' => $title,
-            'description' => $description ,
-             'color' => $request['color']
-        ]);
-
-        $result = $category->save();
-
-        if ($result)
+    public function store(CategoryRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $data = $request->all();
+            Category::query()->create($data);
             Session::flash('alert-success', 'Successfully created a new category');
-        else
+            DB::commit();
+        } catch (Exception $exception) {
             Session::flash('alert-danger', 'Failed to create a new category');
+            DB::rollBack();
+        }
+        return redirect()->back();
+    }
 
+    public function edit($id)
+    {
+        $data['item'] = Category::query()->findOrFail($id);
+        return view('categories.create', $data);
+    }
+
+    public function update($id , CategoryRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $data = $request->all();
+            Category::query()->findOrFail($id)->update($data);
+            Session::flash('alert-success', 'Successfully  category updated');
+            DB::commit();
+        } catch (Exception $exception) {
+            Session::flash('alert-danger', 'Failed to updated a category');
+            DB::rollBack();
+        }
         return redirect()->back();
     }
 
     public function destroy($id)
     {
         //delete category if it has no notes
-        $category = Category::find($id);
+        $category = Category::query()->find($id);
 
         if ($category->notes->count() == 0) {
             $category->delete();
-            Session::flash('alert-success', 'Successfully deleted the category');
+            return response()->json([
+                'status' => true,
+                'message' => 'Category deleted Successfully'
+            ]);
         } else {
-            Session::flash('alert-danger', 'Failed to delete the category');
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to delete the category'
+            ]);
         }
-
-        return redirect()->back();
     }
 
 }

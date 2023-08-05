@@ -1,8 +1,8 @@
 <!DOCTYPE html>
- 
+
 <html lang="en">
 	<!--begin::Head-->
-	<head> 
+	<head>
 		<title>reset-password</title>
 		<meta charset="utf-8" />
 		<meta name="description" content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Blazor, Django, Flask &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
@@ -53,7 +53,7 @@ button#kt_sign_in_submit {
                         <img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="assets/signin.svg" alt="" />
 						<img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="assets/signin.svg" alt="" />
 						<!--end::Image-->
-					 
+
 						<!--begin::Text-->
 						<div class="text-gray-600 fs-base text-center fw-semibold">In this kind of post,
 						<a href="#" class="opacity-75-hover text-primary me-1">the blogger</a>introduces a person they’ve interviewed
@@ -86,7 +86,7 @@ button#kt_sign_in_submit {
 								<!--begin::Input group=-->
 								<div class="fv-row mb-8">
 									<!--begin::Email-->
-									<input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" />
+									<input type="text" placeholder="Email" name="email" autocomplete="off" class="form-wpcontrol bg-transparent" />
 									<!--end::Email-->
 								</div>
 								<!--begin::Actions-->
@@ -116,7 +116,7 @@ button#kt_sign_in_submit {
 		</div>
 		<!--end::Root-->
 		<!--begin::Javascript-->
-		 
+
 		<!--begin::Global Javascript Bundle(used by all pages)-->
 		<script src="assets/plugins/global/plugins.bundle.js"></script>
 		<script src="assets/js/scripts.bundle.js"></script>
