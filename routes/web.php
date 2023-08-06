@@ -108,6 +108,13 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/add-attachment', [NotesController::class, 'addAttachment'])->name('add.attachment');
             Route::get('/get-comments', [NotesController::class, 'getComments'])->name('get.comments');
             Route::post('/add-comment', [NotesController::class, 'addComment'])->name('add.comment');
+
+
+            Route::group(['prefix' => 'share' , 'as' => 'share.'], function () {
+                Route::get('/', [NotesController::class, 'share'])->name('index');
+                Route::post('/', [NotesController::class, 'shareStore'])->name('store');
+            });
+
         });
     });
 

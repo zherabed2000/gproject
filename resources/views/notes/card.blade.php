@@ -1,4 +1,4 @@
-<div class="col-4 mb-5 ">
+<div class="col-3 mb-5 ">
     <!--begin::Card widget 15-->
     <div class="card card-flush h-xl-100">
         <!--begin::Body-->
@@ -83,7 +83,7 @@
                         <div class="d-flex justify-content-center  flex-stack mt-auto bd-highlight">
                             <!--begin::Actions-->
                             @if($note->user->id == auth()->id())
-                                <a href="javascript:;" class="btn btn-light mr-2 add_attachment"
+                                <a href="javascript:;" class="btn btn-light mr-4 add_attachment"
                                    data-bs-toggle="modal"
                                    data-url="{{ route('notes.add.attachment' ,$note->id ) }}"
                                    data-attachment="{{ $note->attachment ? asset($note->attachment) : ''}}"
@@ -129,9 +129,8 @@
 																		</span>
                                 <!--end::Svg Icon--></a>
 
-                            <a href="javascript:;" class="btn btn-light mr-2"
-                               data-bs-toggle="modal"
-                               data-bs-target="#">
+                            @if($note->user->id == auth()->id())
+                            <a href="{{ route('notes.share.index' , $note->id ) }}" class="btn btn-light mr-2" >
                                 <span class="svg-icon svg-icon-2"><svg
                                         class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
@@ -142,6 +141,7 @@
                                                                     </span>
                                 <!--end::Svg Icon-->
                             </a>
+                            @endif
 
                             <a href="javascript:;" class="btn btn-light operation"
                                data-url="{{ route('notes.favourite' , $note->id ) }}">
@@ -173,6 +173,7 @@
                             </a>
 
 
+                            @if($note->user->id == auth()->id())
                             <a class="btn btn-light mr-2 text-center delete"
                                data-url="{{ route('notes.destroy' , $note->id ) }}"
                                href="javascript:;">
@@ -192,6 +193,7 @@
                                                                             </svg>
                                                                         </span>
                             </a>
+                            @endif
 
                         </div>
 
@@ -208,3 +210,13 @@
 </div>
 
 
+@push('css')
+    <style>
+        .row .ui-sortable-handle {
+            margin:  0 40px 0 0;
+        }
+        .btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon){
+            margin: 0 3px;
+        }
+    </style>
+@endpush

@@ -6,7 +6,9 @@ use App\Http\Requests\Note\CreateNoteRequest;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Favourite;
+use App\Models\Friend;
 use App\Models\Note;
+use App\Models\NoteShare;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -17,10 +19,8 @@ class NotesController extends Controller
 
     public function index(Request $request)
     {
-        $search = $request->query('search');
         $data['notes'] = Note::query()
-            ->where('name', 'LIKE', "%{$search}%")
-            ->orWhere('content', 'LIKE', "%{$search}%")
+            ->filter()->visible()
             ->with('user')
             ->latest()
             ->get();
@@ -194,6 +194,49 @@ class NotesController extends Controller
         return redirect()->route('index');
     }
 
+
+    /////////////////////////////////////////////
+
+    public function share($id)
+    {
+        $data['item'] = Note::query()->findOrFail($id);
+        $data['friends'] = Friend::query()->where('user_id', auth()->id())
+            ->with('friend')->where('status', 'accepted')->get();
+
+        return view('notes.share', $data);
+    }
+
+    public function shareStore($id, Request $request)
+    {
+        $note = Note::query()->find($id);
+        if (!$note) {
+            Session::flash('alert-danger', 'Note Not Found');
+            return back();
+        }
+
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'required|exists:friends,friend_id,status,accepted,user_id,' . auth()->id(),
+        ], [
+            'ids.*.exists' => 'Some users are not friends'
+        ], [
+            'ids' => 'users',
+            'ids.*' => 'user',
+        ]);
+
+        $ids = $request->get('ids', []);
+        foreach ($ids as $user_id) {
+            NoteShare::query()->updateOrCreate([
+                'note_id' => $id,
+                'user_id' => $user_id
+            ]);
+        }
+        Session::flash('alert-success', 'Note shared successfully');
+        return redirect()->route('index');
+
+    }
+
+    /////////////////////////////////////////////
     public function trash()
     {
         return view('Trash')->with('notes', Note::onlyTrashed()->get());

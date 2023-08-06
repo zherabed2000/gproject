@@ -84,7 +84,7 @@ class FriendController extends Controller
 
     public function new()
     {
-        $data['friends'] = Friend::query()->where('user_id', auth()->id())
+        $data['friends'] = Friend::query()->where('friend_id', auth()->id())
             ->where('status', 'pending')->get();
         return view('friends.new', $data);
     }
