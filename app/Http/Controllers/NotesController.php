@@ -43,11 +43,12 @@ class NotesController extends Controller
         DB::beginTransaction();
         try {
             $data = $request->all();
+            $data['user_id'] = auth()->id();
             Note::query()->create($data);
             DB::commit();
             Session::flash('alert-success', 'Successfully created a new note');
             return redirect()->route('index');
-        } catch (Exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
             Session::flash('alert-danger', 'Failed to create a new note');
             return back();
@@ -68,6 +69,7 @@ class NotesController extends Controller
         DB::beginTransaction();
         try {
             $data = $request->all();
+            $data['user_id'] = auth()->id();
             Note::query()->find($id)->update($data);
             DB::commit();
             Session::flash('alert-success', 'Successfully updated a note');

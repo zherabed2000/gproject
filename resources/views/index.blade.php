@@ -30,11 +30,11 @@
         {{--        </div>--}}
         <!--end::Col-->
         <!--begin::Col-->
-        <div class="col-xl-12">
+        <div class="col-3 mb-5 item">
             <!--begin::Card widget 15-->
             <div class="card card-flush h-xl-100">
                 <!--begin::Body-->
-                <div class="card-body py-9">
+                <div class="card-body py-9" style="background: {{ $note->category->color ?? '#1e1e2d' }} !important;">
                     <!--begin::Row-->
                     <div class="row gx-9 h-100">
                         <!--begin::Col-->

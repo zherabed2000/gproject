@@ -14,7 +14,6 @@
                     <div class="d-flex flex-column h-100">
                         <!--begin::Header-->
                         <div class="mb-7">
-
                             <!--begin::Items-->
                             <div class="d-flex justify-content-between flex-wrap d-grid gap-2">
                                 <!--begin::Item-->
@@ -212,9 +211,9 @@
 
 @push('css')
     <style>
-        .row .ui-sortable-handle {
-            margin:  0 40px 0 0;
-        }
+        /*.row .ui-sortable-handle {*/
+        /*    margin:  0 40px 0 0;*/
+        /*}*/
         .btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon){
             margin: 0 3px;
         }
