@@ -129,6 +129,21 @@ class NotesController extends Controller
         }
     }
 
+    public function restore($id)
+    {
+        $note = Note::query()->onlyTrashed()->find($id);
+
+        if (isset($note)) {
+            $note->restore();
+            Session::flash('alert-success', 'Successfully restore a note');
+            return redirect()->route('index');
+
+        } else {
+            Session::flash('alert-success', 'Failed to restore a note');
+            return redirect()->back();
+        }
+    }
+
     public function addAttachment($id, Request $request)
     {
         $note = Note::query()->findOrFail($id);
@@ -232,7 +247,7 @@ class NotesController extends Controller
 
         $ids = $request->get('ids', []);
         $users = User::query()->whereIn('id', $ids)->get();
-        $auth_user =auth()->user();
+        $auth_user = auth()->user();
         foreach ($ids as $user_id) {
 
             NoteShare::query()->updateOrCreate([
@@ -241,7 +256,7 @@ class NotesController extends Controller
             ]);
 
             $message = [
-                'title' => 'User Shared Note #'.$note->id,
+                'title' => 'User Shared Note #' . $note->id,
                 'content' => "User $auth_user->name Shared with you his note",
             ];
             Notification::send($users->where('id', $user_id)->first(), new GeneralNotification($note, $message, [], [CustomDBChannel::class]));
@@ -255,7 +270,7 @@ class NotesController extends Controller
     /////////////////////////////////////////////
     public function trash()
     {
-        return view('Trash')->with('notes', Note::onlyTrashed()->get());
+        return view('Trash')->with('notes', Note::onlyTrashed()->where('user_id', auth()->id())->get());
     }
 
 
@@ -263,7 +278,7 @@ class NotesController extends Controller
     {
         $user = auth()->user();
         $data['notes'] = $user->notes()->latest()->get();
-        return view('Favorite' , $data);
+        return view('Favorite', $data);
     }
 
 

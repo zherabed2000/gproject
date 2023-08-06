@@ -97,6 +97,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/edit', [NotesController::class, 'edit'])->name('edit');
             Route::put('/edit', [NotesController::class, 'update'])->name('update');
             Route::delete('/', [NotesController::class, 'destroy'])->name('destroy');
+            Route::get('/restore', [NotesController::class, 'restore'])->name('restore');
             Route::post('/', [NotesController::class, 'favourite'])->name('favourite');
             Route::post('/add-attachment', [NotesController::class, 'addAttachment'])->name('add.attachment');
             Route::get('/get-comments', [NotesController::class, 'getComments'])->name('get.comments');
