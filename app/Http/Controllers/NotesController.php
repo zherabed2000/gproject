@@ -9,8 +9,12 @@ use App\Models\Favourite;
 use App\Models\Friend;
 use App\Models\Note;
 use App\Models\NoteShare;
+use App\Models\User;
+use App\Notifications\CustomDBChannel;
+use App\Notifications\GeneralNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use \Exception;
 
@@ -225,12 +229,22 @@ class NotesController extends Controller
         ]);
 
         $ids = $request->get('ids', []);
+        $users = User::query()->whereIn('id', $ids)->get();
+        $auth_user =auth()->user();
         foreach ($ids as $user_id) {
+
             NoteShare::query()->updateOrCreate([
                 'note_id' => $id,
                 'user_id' => $user_id
             ]);
+
+            $message = [
+                'title' => 'User Shared Note #'.$note->id,
+                'content' => "User $auth_user->name Shared with you his note",
+            ];
+            Notification::send($users->where('id', $user_id)->first(), new GeneralNotification($note, $message, [], [CustomDBChannel::class]));
         }
+
         Session::flash('alert-success', 'Note shared successfully');
         return redirect()->route('index');
 
@@ -245,7 +259,9 @@ class NotesController extends Controller
 
     public function favorites()
     {
-        return view('Favorite')->with('notes', Note::select('*')->where('is_favorite', true)->get());
+        $user = auth()->user();
+        $data['notes'] = $user->notes()->latest()->get();
+        return view('Favorite' , $data);
     }
 
 

@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
 //
 //
 //    Route::get('/BlockedFriend/{id}', [FrindController::class, 'blokedFrind'])->name('blokedFrind');
-//
+    Route::get('/Favorite', [NotesController::class, 'favorites']);
 
     Route::get('/', [NotesController::class, 'index'])->name('index');
 

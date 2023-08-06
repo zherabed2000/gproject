@@ -1,4 +1,4 @@
-<div class="col-3 mb-5 ">
+<div class="col-3 mb-5 item">
     <!--begin::Card widget 15-->
     <div class="card card-flush h-xl-100">
         <!--begin::Body-->

@@ -80,6 +80,12 @@ class User extends Authenticatable
         return $this->friendsFrom()->wherePivot('accepted', true);
     }
 
+
+    public function notes()
+    {
+        return $this->belongsToMany(Note::class, 'favourites', 'user_id', 'note_id');
+    }
+
     public function scopeFilter($q)
     {
 
