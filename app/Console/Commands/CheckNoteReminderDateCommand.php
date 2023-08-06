@@ -29,7 +29,7 @@ class CheckNoteReminderDateCommand extends Command
      */
     public function handle()
     {
-        $notes = Note::query()->where('reminder_date' , today())->with('user')->get();
+        $notes = Note::query()->whereDate('reminder_date' , today()->toDateString())->with('user')->get();
         foreach ($notes as $note){
 
 

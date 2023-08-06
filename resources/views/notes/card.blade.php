@@ -44,9 +44,10 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div>
-                                        <a href="{{ route('notes.edit',$note->id)  }}"
-                                           class="btn btn-light fw-bold text-gray-800 text-hover-primary fs-7">
+                                    @if($note->user->id == auth()->id())
+                                        <div>
+                                            <a href="{{ route('notes.edit',$note->id)  }}"
+                                               class="btn btn-light fw-bold text-gray-800 text-hover-primary fs-7">
                                                 <span class="svg-icon svg-icon-2"><svg
                                                         width="24" height="24"
                                                         viewBox="0 0 24 24" fill="none"
@@ -64,8 +65,9 @@
                                                                                 fill="currentColor"/>
                                                                         </svg>
                                                 </span>
-                                        </a>
-                                    </div>
+                                            </a>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                             <!--end::Items-->
@@ -79,7 +81,7 @@
                         <!--end::Body-->
                         <!--begin::Footer-->
 
-                        <div class="d-flex justify-content-center  flex-stack mt-auto bd-highlight">
+                        <div class="d-flex justify-content-between  flex-stack mt-auto bd-highlight">
                             <!--begin::Actions-->
                             @if($note->user->id == auth()->id())
                                 <a href="javascript:;" class="btn btn-light mr-4 add_attachment"
@@ -129,7 +131,7 @@
                                 <!--end::Svg Icon--></a>
 
                             @if($note->user->id == auth()->id())
-                            <a href="{{ route('notes.share.index' , $note->id ) }}" class="btn btn-light mr-2" >
+                                <a href="{{ route('notes.share.index' , $note->id ) }}" class="btn btn-light mr-2">
                                 <span class="svg-icon svg-icon-2"><svg
                                         class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
@@ -138,8 +140,8 @@
                                                                           d="M1.248 15C.22 11.77 2.275 4.232 9.466 4.232V2.079a1.025 1.025 0 0 1 1.644-.862l5.479 4.307a1.108 1.108 0 0 1 0 1.723l-5.48 4.307a1.026 1.026 0 0 1-1.643-.861V8.539C2.275 9.616 1.248 15 1.248 15Z"/>
                                                                     </svg>
                                                                     </span>
-                                <!--end::Svg Icon-->
-                            </a>
+                                    <!--end::Svg Icon-->
+                                </a>
                             @endif
 
                             <a href="javascript:;" class="btn btn-light operation"
@@ -173,9 +175,9 @@
 
 
                             @if($note->user->id == auth()->id())
-                            <a class="btn btn-light mr-2 text-center delete"
-                               data-url="{{ route('notes.destroy' , $note->id ) }}"
-                               href="javascript:;">
+                                <a class="btn btn-light mr-2 text-center delete"
+                                   data-url="{{ route('notes.destroy' , $note->id ) }}"
+                                   href="javascript:;">
                                 <span class="svg-icon svg-icon-2 mr-0"><svg
                                         width="24" height="24"
                                         viewBox="0 0 24 24" fill="none"
@@ -191,7 +193,7 @@
                                                                                       fill="currentColor"/>
                                                                             </svg>
                                                                         </span>
-                            </a>
+                                </a>
                             @endif
 
                         </div>
@@ -214,7 +216,7 @@
         /*.row .ui-sortable-handle {*/
         /*    margin:  0 40px 0 0;*/
         /*}*/
-        .btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon){
+        .btn:not(.btn-outline):not(.btn-dashed):not(.border-hover):not(.border-active):not(.btn-flush):not(.btn-icon) {
             margin: 0 3px;
         }
     </style>

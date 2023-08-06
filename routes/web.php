@@ -38,19 +38,12 @@ Route::post('/post/register', [MainController::class, 'registerPost'])->name('re
 
 
 // Route::get('main/successlogin', 'MainController@successlogin');
-// Route::get('main/logout', 'MainController@logout');
+Route::get('/main/logout', [MainController::class, 'logout'])->name('logout');
 
 
 Route::group(['middleware' => ['auth']], function () {
 
 
-//    Route::get('/AddAFriend', [FrindController::class, 'addFrind'])->name('addFrind');
-//    Route::get('/AddAFriendNew', [FrindController::class, 'addFrindNew'])->name('addFrindNew');
-
-//    Route::get('/AddAFriend/{id}', [FrindController::class, 'addFrindPost'])->name('addFrindPost');
-//
-//
-//    Route::get('/BlockedFriend/{id}', [FrindController::class, 'blokedFrind'])->name('blokedFrind');
     Route::get('/Favorite', [NotesController::class, 'favorites']);
 
     Route::get('/', [NotesController::class, 'index'])->name('index');
@@ -110,7 +103,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/add-comment', [NotesController::class, 'addComment'])->name('add.comment');
 
 
-            Route::group(['prefix' => 'share' , 'as' => 'share.'], function () {
+            Route::group(['prefix' => 'share', 'as' => 'share.'], function () {
                 Route::get('/', [NotesController::class, 'share'])->name('index');
                 Route::post('/', [NotesController::class, 'shareStore'])->name('store');
             });

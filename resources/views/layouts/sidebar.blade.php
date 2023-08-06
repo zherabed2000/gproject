@@ -90,7 +90,7 @@
 
 
                 <!--begin:Menu Iem User-->
-                @if (auth()->user()->is_admin == 0)
+                @if (auth()->user()->is_admin == 1)
                     <div class="menu-item menu-accordion">
                         <!--begin:Menu link-->
                         <a class="menu-link" href="{{ route('users.index') }}">

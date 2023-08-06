@@ -13,6 +13,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $data['categories'] = Category::query()->filter()->latest()->get();
+
         return view('categories.index', $data);
     }
 

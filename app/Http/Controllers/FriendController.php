@@ -44,12 +44,9 @@ class FriendController extends Controller
 
     public function remove($id)
     {
-
         Friend::query()->where([
-            'user_id' => auth()->id(),
-            'friend_id' => $id,
+            'id' => $id,
         ])->delete();
-
 
         Session::flash('alert-success', 'Friend Removed Successfully');
         return redirect()->route('friends.index');
@@ -58,10 +55,7 @@ class FriendController extends Controller
     public function block($id)
     {
 
-        $friend = Friend::query()->where([
-            'user_id' => auth()->id(),
-            'friend_id' => $id,
-        ])->first();
+        $friend = Friend::query()->find($id);
         $friend->is_blocked = !$friend->is_blocked;
         $friend->save();
         Session::flash('alert-success', 'Block status changed successfully');
@@ -72,10 +66,7 @@ class FriendController extends Controller
     public function accept($id)
     {
 
-        $friend = Friend::query()->where([
-            'user_id' => auth()->id(),
-            'friend_id' => $id,
-        ])->first();
+        $friend = Friend::query()->find($id);
         $friend->status = 'accepted';
         $friend->save();
         Session::flash('alert-success', 'Request Accepted successfully');

@@ -124,13 +124,13 @@
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
                                         <div class="menu-item px-3">
-                                            <a href="{{ route('friends.remove', $friend->friend_id )}}"
+                                            <a href="{{ route('friends.remove', $friend->id )}}"
                                                class="menu-link px-3"
                                                data-kt-ecommerce-category-filter="delete_row">
                                                 <i class="fa-solid fa-trash" style="margin-right: 3px;"></i>
                                                 Remove
                                             </a>
-                                            <a href="{{ route('friends.block', $friend->friend_id )}}"
+                                            <a href="{{ route('friends.block', $friend->id )}}"
                                                class="menu-link px-3"
                                                data-kt-ecommerce-category-filter="delete_row">
                                                 <i class="fa-solid fa-ban" style="margin-right: 3px;"></i>

@@ -125,15 +125,6 @@
                                     <a href="javascript:;" data-url="{{route('categories.destroy' , $category->id )}}"
                                        class="menu-link px-3 delete">Delete</a>
                                 </div>
-
-                                {{--                                                        <!--begin::Menu item-->--}}
-                                {{--                                                        <div class="menu-item px-3">--}}
-                                {{--                                                            <form style="display: inline-block;" method="POST" action="{{ route('categories.destroy' , $category->id ) }}">--}}
-                                {{--                                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
-                                {{--                                                                <button class="menu-link px-3" type="submit">Delete</button>--}}
-                                {{--                                                            </form>--}}
-                                {{--                                                        </div>--}}
-                                {{--                                                        <!--end::Menu item-->--}}
                             </div>
                             <!--end::Menu-->
                         </td>

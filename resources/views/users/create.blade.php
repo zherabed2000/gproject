@@ -37,6 +37,13 @@
                            required/>
                 </div>
 
+                <div class="fv-row mb-8">
+                    <label class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="is_admin" value="1" {{ isset($item) && $item->is_admin ? 'checked' : '' }} />
+                        <span class="form-check-label fw-semibold text-gray-700 fs-6 ms-1">Is Admin</span>
+                    </label>
+                </div>
+
                 <div class="form-group">
                     <label>
                         Password

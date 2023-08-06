@@ -436,7 +436,7 @@
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href="../../demo1/dist/authentication/flows/basic/sign-in.html"
+                            <a href="{{ url('/main/logout') }}"
                                class="menu-link px-5">Sign Out</a>
                         </div>
                         <!--end::Menu item-->
