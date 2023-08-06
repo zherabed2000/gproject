@@ -45,8 +45,6 @@ class User extends Authenticatable
     ];
 
 
-
-
     public function friendsTo()
     {
         return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id')
@@ -63,25 +61,34 @@ class User extends Authenticatable
 
 
     public function pendingFriendsTo()
-{
-    return $this->friendsTo()->wherePivot('accepted', false);
-}
+    {
+        return $this->friendsTo()->wherePivot('accepted', false);
+    }
 
-public function pendingFriendsFrom()
-{
-    return $this->friendsFrom()->wherePivot('accepted', false);
-}
+    public function pendingFriendsFrom()
+    {
+        return $this->friendsFrom()->wherePivot('accepted', false);
+    }
 
-public function acceptedFriendsTo()
-{
-    return $this->friendsTo()->wherePivot('accepted', true);
-}
+    public function acceptedFriendsTo()
+    {
+        return $this->friendsTo()->wherePivot('accepted', true);
+    }
 
-public function acceptedFriendsFrom()
-{
-    return $this->friendsFrom()->wherePivot('accepted', true);
-}
+    public function acceptedFriendsFrom()
+    {
+        return $this->friendsFrom()->wherePivot('accepted', true);
+    }
 
+    public function scopeFilter($q)
+    {
 
+        if (request()->filled('search')) {
+            $search = request('search');
+            $q->where('email', $search)
+                ->Orwhere('name', 'like', "%$search%");
+        }
+
+    }
 
 }

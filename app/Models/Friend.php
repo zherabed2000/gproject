@@ -10,7 +10,7 @@ class Friend extends Model
 {
     use HasFactory;
     use SoftDeletes;
-     
+
     protected $fillable = [
         'user_id',
         'friend_id',
@@ -20,5 +20,10 @@ class Friend extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function friend()
+    {
+        return $this->belongsTo(User::class , 'friend_id');
     }
 }

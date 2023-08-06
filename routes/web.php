@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\NotesController;
-use App\Http\Controllers\FrindController;
+use App\Http\Controllers\FriendController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
@@ -44,28 +44,22 @@ Route::post('/post/register', [MainController::class, 'registerPost'])->name('re
 Route::group(['middleware' => ['auth']], function () {
 
 
-    Route::get('/AddAFriend', [FrindController::class, 'addFrind'])->name('addFrind');
-    Route::get('/AddAFriendNew', [FrindController::class, 'addFrindNew'])->name('addFrindNew');
+//    Route::get('/AddAFriend', [FrindController::class, 'addFrind'])->name('addFrind');
+//    Route::get('/AddAFriendNew', [FrindController::class, 'addFrindNew'])->name('addFrindNew');
 
-    Route::get('/AddAFriend/{id}', [FrindController::class, 'addFrindPost'])->name('addFrindPost');
-
-
-    Route::get('/BlockedFriend/{id}', [FrindController::class, 'blokedFrind'])->name('blokedFrind');
-
+//    Route::get('/AddAFriend/{id}', [FrindController::class, 'addFrindPost'])->name('addFrindPost');
+//
+//
+//    Route::get('/BlockedFriend/{id}', [FrindController::class, 'blokedFrind'])->name('blokedFrind');
+//
 
     Route::get('/', [NotesController::class, 'index'])->name('index');
-//    Route::get('/AddNote', function (){
-//        return view('AddNote')->with('categories', \App\Models\Category::select('*')->get());
-//
-//    } );
+
     Route::get('/Trash', [NotesController::class, 'trash']);
-//    Route::get('/Favorite', [NotesController::class, 'favorites']);
 
-     Route::post('/note/favourite/{id}', [NotesController::class, 'favourite']);
+    Route::post('/note/favourite/{id}', [NotesController::class, 'favourite']);
 
-//    Route::post('/note/delete/{id}', [NotesController::class, 'destroy']);
     Route::post('/note/recover/{id}', [NotesController::class, 'recover']);
-//    Route::post('/note/force-delete/{id}', [NotesController::class, 'forceDestroy']);
 
 
     Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
@@ -117,9 +111,25 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
+    Route::group(['prefix' => 'friends', 'as' => 'friends.'], function () {
 
+        Route::get('/', [FriendController::class, 'index'])->name('index');
 
+        Route::group(['prefix' => 'add'], function () {
+            Route::get('/', [FriendController::class, 'add'])->name('add');
+            Route::get('/{id}', [FriendController::class, 'send'])->name('send');
+        });
 
+        Route::group(['prefix' => '{id}'], function () {
+            Route::get('/remove', [FriendController::class, 'remove'])->name('remove');
+            Route::get('/block', [FriendController::class, 'block'])->name('block');
+        });
+
+        Route::group(['prefix' => 'new'], function () {
+            Route::get('/', [FriendController::class, 'new'])->name('new');
+            Route::get('/{id}/accept', [FriendController::class, 'accept'])->name('accept');
+        });
+    });
 
 
 });
