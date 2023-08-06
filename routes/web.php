@@ -54,17 +54,18 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::get('/', [NotesController::class, 'index'])->name('index');
-    Route::get('/AddNote', [NotesController::class, 'add'])->name('note.add');
+//    Route::get('/AddNote', function (){
+//        return view('AddNote')->with('categories', \App\Models\Category::select('*')->get());
+//
+//    } );
     Route::get('/Trash', [NotesController::class, 'trash']);
-    Route::get('/Favorite', [NotesController::class, 'favorites']);
-    Route::get('/EditNote/{id}', [NotesController::class, 'edit']);
+//    Route::get('/Favorite', [NotesController::class, 'favorites']);
 
-    Route::post('/note/store', [NotesController::class, 'store'])->name('note.store');
-    Route::post('/note/favourite/{id}', [NotesController::class, 'favourite']);
-    Route::post('/note/update/{id}', [NotesController::class, 'update']);
-    Route::post('/note/delete/{id}', [NotesController::class, 'destroy']);
+     Route::post('/note/favourite/{id}', [NotesController::class, 'favourite']);
+
+//    Route::post('/note/delete/{id}', [NotesController::class, 'destroy']);
     Route::post('/note/recover/{id}', [NotesController::class, 'recover']);
-    Route::post('/note/force-delete/{id}', [NotesController::class, 'forceDestroy']);
+//    Route::post('/note/force-delete/{id}', [NotesController::class, 'forceDestroy']);
 
 
     Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
@@ -96,6 +97,23 @@ Route::group(['middleware' => ['auth']], function () {
             Route::delete('/', [UsersController::class, 'destroy'])->name('destroy');
         });
     });
+
+
+    Route::group(['prefix' => 'notes', 'as' => 'notes.'], function () {
+
+
+        Route::group(['prefix' => 'create'], function () {
+            Route::get('/', [NotesController::class, 'create'])->name('create');
+            Route::post('/', [NotesController::class, 'store'])->name('store');
+        });
+        Route::group(['prefix' => '{id}'], function () {
+            Route::get('/edit', [NotesController::class, 'edit'])->name('edit');
+            Route::put('/edit', [NotesController::class, 'update'])->name('update');
+            Route::delete('/', [NotesController::class, 'destroy'])->name('destroy');
+            Route::post('/', [NotesController::class, 'favourite'])->name('favourite');
+        });
+    });
+
 
 
 

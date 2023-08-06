@@ -27,7 +27,7 @@ class CreateNoteRequest extends FormRequest
             'name' => 'required|string',
             'category_id' => 'required|numeric',
             'content' => 'required|string',
-            'color' => 'required|string'
+            'reminder_date' => 'required|date|after_or_equal:today'
         ];
     }
 
