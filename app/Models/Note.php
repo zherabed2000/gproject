@@ -17,11 +17,18 @@ class Note extends Model
         'content',
         'is_favorite',
         'reminder_date',
+        'user_id',
+        'attachments',
     ];
 
     public function category()
     {
         return $this->belongsTo(Category::class)->withTrashed();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class );
     }
 
     public function users()

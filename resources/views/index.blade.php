@@ -10,7 +10,8 @@
             margin-left: 2px !important;
 
         }
-        .btn .svg-icon{
+
+        .btn .svg-icon {
             margin-right: 0;
         }
     </style>
@@ -22,14 +23,14 @@
     <div class="row px-8 mb-5 mb-xl-10" id="notes-container">
         <!--begin::Col-->
 
-{{--        <div class="row">--}}
-            @foreach ($notes as $note)
-                @include('notes.card')
-            @endforeach
-{{--        </div>--}}
+        {{--        <div class="row">--}}
+        @foreach ($notes as $note)
+            @include('notes.card')
+        @endforeach
+        {{--        </div>--}}
         <!--end::Col-->
         <!--begin::Col-->
-        <div class="col-xxl-4">
+        <div class="col-xl-12">
             <!--begin::Card widget 15-->
             <div class="card card-flush h-xl-100">
                 <!--begin::Body-->
@@ -64,13 +65,13 @@
                                 </div>
                                 <!--end::Header-->
                                 <!--begin::Body-->
-                                <a href="/AddNote">
+                                <a href="{{ route('notes.create') }}">
                                     <div
                                         class="d-flex flex-column  text-center pt-5    card-rounded">
                                         <p>
-                                            <img
-                                                src="assets/media/icons/duotune/arrows/arr075.svg"
-                                                height="200" style="opacity: 20%;"/></p>
+                                            <img src="{{ asset('assets/media/icons/duotune/arrows/arr075.svg') }}"
+                                                 height="200" style="opacity: 20%;"/>
+                                        </p>
                                     </div>
                                 </a>
 
@@ -98,7 +99,7 @@
 
 @push('js')
     <script>
-        $(function() {
+        $(function () {
             $("#notes-container").sortable({
                 stop: function (event, ui) {
                     $("#notes-container .item").each(function () {
@@ -107,5 +108,40 @@
                 }
             }).disableSelection();
         });
+    </script>
+
+    <script>
+        $(document).on('click', '.add_attachment', function () {
+            let url = $(this).attr('data-url');
+            let attachment = $(this).attr('data-attachment');
+            $('.modal#add_attachment').find('form').attr('action', url);
+
+            if (attachment) {
+                $('.modal#add_attachment').find('#image_container').removeClass('d-none').find('img').attr('src', attachment);
+            } else {
+                $('.modal#add_attachment').find('#image_container').addClass('d-none').find('img').attr('src', '');
+            }
+        })
+        $(document).on('click', '.comments_btn', function () {
+            let url = $(this).attr('data-url');
+            let fetch_url = $(this).attr('data-fetch-url');
+
+            $.ajax({
+                url: fetch_url,
+                method: "GET",
+                success: function (res) {
+                    $('.modal#note_comments').find('#comments_cards').html(res.html);
+                    $('.modal#note_comments').find('form').attr('action', url);
+                    $('.modal#note_comments').modal('show');
+                },
+                error: function (error) {
+                    $('.modal#note_comments').find('#comments_cards').html('');
+                    toastr.error('Something was wrong');
+
+                }
+            })
+
+
+        })
     </script>
 @endpush

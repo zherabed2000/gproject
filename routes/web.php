@@ -111,6 +111,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::put('/edit', [NotesController::class, 'update'])->name('update');
             Route::delete('/', [NotesController::class, 'destroy'])->name('destroy');
             Route::post('/', [NotesController::class, 'favourite'])->name('favourite');
+            Route::post('/add-attachment', [NotesController::class, 'addAttachment'])->name('add.attachment');
+            Route::get('/get-comments', [NotesController::class, 'getComments'])->name('get.comments');
+            Route::post('/add-comment', [NotesController::class, 'addComment'])->name('add.comment');
         });
     });
 

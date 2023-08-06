@@ -80,11 +80,14 @@
                         <!--end::Body-->
                         <!--begin::Footer-->
 
-                        <div class="d-flex justify-content-end  flex-stack mt-auto bd-highlight">
+                        <div class="d-flex justify-content-center  flex-stack mt-auto bd-highlight">
                             <!--begin::Actions-->
-                            <a href="#" class="btn btn-light mr-2"
-                               data-bs-toggle="modal"
-                               data-bs-target="#kt_modal_users_search">
+                            @if($note->user->id == auth()->id())
+                                <a href="javascript:;" class="btn btn-light mr-2 add_attachment"
+                                   data-bs-toggle="modal"
+                                   data-url="{{ route('notes.add.attachment' ,$note->id ) }}"
+                                   data-attachment="{{ $note->attachment ? asset($note->attachment) : ''}}"
+                                   data-bs-target="#add_attachment">
                                                 <span class="svg-icon svg-icon-2"><svg width="24"
                                                                                        height="24"
                                                                                        viewBox="0 0 24 24"
@@ -98,16 +101,20 @@
                                                                                 fill="currentColor"/>
                                                                         </svg>
                                                                     </span>
-                                <!--end::Svg Icon-->
-                            </a>
+                                    <!--end::Svg Icon-->
+                                </a>
+                            @endif
 
 
                             <a href="javascript:;" class="btn btn-light mr-2">
-                                <span class="badge badge-light">{{\Carbon\Carbon::parse($note->reminder_date)->diffForHumans()}}</span>
+                                <span
+                                    class="badge badge-light">{{\Carbon\Carbon::parse($note->reminder_date)->diffForHumans()}}</span>
                             </a>
 
-                            <a href="#" class="btn btn-light mr-2" data-bs-toggle="modal"
-                               data-bs-target="#note_comments">
+                            <a href="javascript:;" class="btn btn-light mr-2 comments_btn"
+                               data-url="{{ route('notes.add.comment' , $note->id)}}"
+                               data-fetch-url="{{ route('notes.get.comments' , $note->id)}}"
+                            >
                                 <!--begin::Svg Icon | path: C:/wamp64/www/keenthemes/core/html/src/media/icons/duotune/coding/cod007.svg-->
                                 <span class="svg-icon svg-icon-2"><svg xmlns="http://www.w3.org/2000/svg"
                                                                        width="24" height="24"
@@ -136,7 +143,8 @@
                                 <!--end::Svg Icon-->
                             </a>
 
-                            <a href="javascript:;" class="btn btn-light operation" data-url="{{ route('notes.favourite' , $note->id ) }}">
+                            <a href="javascript:;" class="btn btn-light operation"
+                               data-url="{{ route('notes.favourite' , $note->id ) }}">
                                 @if($note->isUserFav() )
                                     <span class="svg-icon svg-icon-2"
                                           style="color: red"><svg width="24"
@@ -165,8 +173,8 @@
                             </a>
 
 
-
-                            <a class="btn btn-light mr-2 text-center delete" data-url="{{ route('notes.destroy' , $note->id ) }}"
+                            <a class="btn btn-light mr-2 text-center delete"
+                               data-url="{{ route('notes.destroy' , $note->id ) }}"
                                href="javascript:;">
                                 <span class="svg-icon svg-icon-2 mr-0"><svg
                                         width="24" height="24"
@@ -198,3 +206,5 @@
     </div>
 
 </div>
+
+

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Note\CreateNoteRequest;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Favourite;
 use App\Models\Note;
 use Illuminate\Http\Request;
@@ -20,9 +21,10 @@ class NotesController extends Controller
         $data['notes'] = Note::query()
             ->where('name', 'LIKE', "%{$search}%")
             ->orWhere('content', 'LIKE', "%{$search}%")
+            ->with('user')
             ->latest()
             ->get();
-        return view('index' , $data);
+        return view('index', $data);
     }
 
     public function create()
@@ -55,7 +57,8 @@ class NotesController extends Controller
         $data['item'] = Note::query()->findOrFail($id);
         return view('notes.create', $data);
     }
-    public function update($id , CreateNoteRequest $request)
+
+    public function update($id, CreateNoteRequest $request)
     {
 
         DB::beginTransaction();
@@ -73,51 +76,24 @@ class NotesController extends Controller
     }
 
 
-
-    public function trash()
-    {
-        return view('Trash')->with('notes', Note::onlyTrashed()->get());
-    }
-
-
-    public function favorites()
-    {
-        return view('Favorite')->with('notes', Note::select('*')->where('is_favorite', true)->get());
-    }
-
-
-//    public function edit($id)
-//    {
-//        $note = Note::select('*')
-//            ->where('id', $id)
-//            ->first();
-//
-//        if ($note == null)
-//            return redirect()->back()->withErrors(['Note does not exists.']);
-//
-//        return view('EditNote')->with('note', $note)->with('categories', Category::select('*')->get());
-//    }
-
-
-
     public function favourite($id)
     {
         $note = Note::query()->find($id);
 
-        if (!$note){
+        if (!$note) {
             return response()->json([
                 'status' => false,
                 'message' => 'Note does not exists.',
             ]);
         }
 
-        $credential= [
+        $credential = [
             'user_id' => auth()->id(),
             'note_id' => $note->id,
         ];
-        if (Favourite::query()->where($credential)->exists()){
+        if (Favourite::query()->where($credential)->exists()) {
             Favourite::query()->where($credential)->delete();
-        }else{
+        } else {
             Favourite::query()->create($credential);
         }
 
@@ -146,6 +122,102 @@ class NotesController extends Controller
             ]);
         }
     }
+
+    public function addAttachment($id, Request $request)
+    {
+        $note = Note::query()->findOrFail($id);
+        if (!$note) {
+            Session::flash('alert-danger', 'Note Not Found');
+            return back();
+        }
+
+        $request->validate([
+            'file' => 'required|image'
+        ], [], [
+            'file' => 'image'
+        ]);
+
+        $file = $request->file('file');
+        //save format
+        $format = $file->getExtension();
+        $name = $file->getClientOriginalName();
+
+        $full_name = $name . $format;
+        $file->move(public_path('uploads'), $full_name);
+
+        $note->attachment = "uploads/$full_name";
+        $note->save();
+
+        Session::flash('alert-success', 'Attachment added successfully');
+        return redirect()->route('index');
+    }
+
+
+    public function getComments($id)
+    {
+        $note = Note::query()->with('comments')->find($id);
+        if (!$note) {
+            return response()->json([
+                'status' => true,
+                'html' => ''
+            ]);
+        }
+
+        $comments = $note->comments;
+
+        $html = view('notes.comment_card', compact('comments'))->render();
+        return response()->json([
+            'status' => true,
+            'html' => $html
+        ]);
+    }
+
+    public function addComment($id, Request $request)
+    {
+        $note = Note::query()->find($id);
+        if (!$note) {
+            Session::flash('alert-danger', 'Note Not Found');
+            return back();
+        }
+
+        $request->validate([
+            'comment' => 'required|string'
+        ]);
+
+        Comment::query()->create([
+            'note_id' => $id,
+            'user_id' => auth()->id(),
+            'comment' => $request->get('comment'),
+        ]);
+
+        Session::flash('alert-success', 'Comment added successfully');
+        return redirect()->route('index');
+    }
+
+    public function trash()
+    {
+        return view('Trash')->with('notes', Note::onlyTrashed()->get());
+    }
+
+
+    public function favorites()
+    {
+        return view('Favorite')->with('notes', Note::select('*')->where('is_favorite', true)->get());
+    }
+
+
+//    public function edit($id)
+//    {
+//        $note = Note::select('*')
+//            ->where('id', $id)
+//            ->first();
+//
+//        if ($note == null)
+//            return redirect()->back()->withErrors(['Note does not exists.']);
+//
+//        return view('EditNote')->with('note', $note)->with('categories', Category::select('*')->get());
+//    }
+
 
     public function forceDestroy($id)
     {
