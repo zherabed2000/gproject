@@ -1,6 +1,4 @@
-@extends('layouts.master')
-
-@push('css')
+<?php $__env->startPush('css'); ?>
 
     <style>
 
@@ -15,19 +13,19 @@
             margin-right: 0;
         }
     </style>
-@endpush
+<?php $__env->stopPush(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <!--begin::Row-->
     <div class="row px-8 mb-5 mb-xl-10" id="notes-container">
         <!--begin::Col-->
 
-        {{--        <div class="row">--}}
-        @foreach ($notes as $note)
-            @include('notes.card')
-        @endforeach
-        {{--        </div>--}}
+        
+        <?php $__currentLoopData = $notes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $note): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php echo $__env->make('notes.card', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        
         <!--end::Col-->
         <!--begin::Col-->
         <div class="col-3 mb-5 item">
@@ -65,11 +63,11 @@
                                 </div>
                                 <!--end::Header-->
                                 <!--begin::Body-->
-                                <a href="{{ route('notes.create') }}">
+                                <a href="<?php echo e(route('notes.create')); ?>">
                                     <div
                                         class="d-flex flex-column  text-center pt-5    card-rounded">
                                         <p>
-                                            <img src="{{ asset('assets/media/icons/duotune/arrows/arr075.svg') }}"
+                                            <img src="<?php echo e(asset('assets/media/icons/duotune/arrows/arr075.svg')); ?>"
                                                  height="200" style="opacity: 20%;"/>
                                         </p>
                                     </div>
@@ -93,11 +91,11 @@
     </div>
     <!--end::Row-->
 
-    @include('notes.modals')
+    <?php echo $__env->make('notes.modals', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('js')
+<?php $__env->startPush('js'); ?>
     <script>
         $(function () {
             $("#notes-container").sortable({
@@ -144,4 +142,6 @@
 
         })
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/gproject/resources/views/index.blade.php ENDPATH**/ ?>
