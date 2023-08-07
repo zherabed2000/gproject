@@ -2,7 +2,7 @@
     <!--begin::Card widget 15-->
     <div class="card card-flush h-xl-100">
         <!--begin::Body-->
-        <div class="card-body py-9" style="background: {{ $note->category->color ?? '#1e1e2d' }} !important;">
+        <div class="card-body py-9" style="background: <?php echo e($note->category->color ?? '#1e1e2d'); ?> !important;">
             <!--begin::Row-->
             <div class="row gx-9 h-100">
                 <!--begin::Col-->
@@ -20,16 +20,16 @@
                                 <div class="d-flex align-items-start me-5 me-xl-13">
                                     <!--begin::Symbol-->
                                     <div class="symbol symbol-30px symbol-circle me-3">
-                                        <img src="{{ asset('assets/media/avatars/300-3.jpg') }}"
+                                        <img src="<?php echo e(asset('assets/media/avatars/300-3.jpg')); ?>"
                                              class="" alt=""/>
                                     </div>
                                     <!--end::Symbol-->
                                     <!--begin::Info-->
                                     <div class="m-0">
                                         <a href="javascript:;"
-                                           class="fw-bold text-gray-800 text-hover-primary fs-7">{{$note->name}}</a>
+                                           class="fw-bold text-gray-800 text-hover-primary fs-7"><?php echo e($note->name); ?></a>
                                         <span
-                                            class="fw-semibold text-gray-400 d-block fs-8">{{ $note->category->title ?? '---' }}</span>
+                                            class="fw-semibold text-gray-400 d-block fs-8"><?php echo e($note->category->title ?? '---'); ?></span>
                                     </div>
                                     <!--end::Info-->
                                 </div>
@@ -40,13 +40,13 @@
                                     <div class="m-0">
                                         <span class="fw-semibold text-gray-400 d-block fs-8">Reminder Date</span>
                                         <span
-                                            class="fw-bold text-gray-800 text-hover-primary fs-7">{{$note->reminder_date}}</span>
+                                            class="fw-bold text-gray-800 text-hover-primary fs-7"><?php echo e($note->reminder_date); ?></span>
                                     </div>
                                 </div>
                                 <div>
-                                    @if($note->user->id == auth()->id())
+                                    <?php if($note->user->id == auth()->id()): ?>
                                         <div>
-                                            <a href="{{ route('notes.edit',$note->id)  }}"
+                                            <a href="<?php echo e(route('notes.edit',$note->id)); ?>"
                                                class="btn btn-light fw-bold text-gray-800 text-hover-primary fs-7">
                                                 <span class="svg-icon svg-icon-2"><svg
                                                         width="24" height="24"
@@ -67,7 +67,7 @@
                                                 </span>
                                             </a>
                                         </div>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <!--end::Items-->
@@ -76,18 +76,18 @@
                         <!--begin::Body-->
                         <div
                             class="d-flex flex-column  text-left pt-5 pb-7 mb-8 card-rounded">
-                            <p>{{$note->content}}</p>
+                            <p><?php echo e($note->content); ?></p>
                         </div>
                         <!--end::Body-->
                         <!--begin::Footer-->
 
                         <div class="d-flex justify-content-between  flex-stack mt-auto bd-highlight">
                             <!--begin::Actions-->
-                            @if($note->user->id == auth()->id())
+                            <?php if($note->user->id == auth()->id()): ?>
                                 <a href="javascript:;" class="btn btn-light mr-4 add_attachment"
                                    data-bs-toggle="modal"
-                                   data-url="{{ route('notes.add.attachment' ,$note->id ) }}"
-                                   data-attachment="{{ $note->attachment ? asset($note->attachment) : ''}}"
+                                   data-url="<?php echo e(route('notes.add.attachment' ,$note->id )); ?>"
+                                   data-attachment="<?php echo e($note->attachment ? asset($note->attachment) : ''); ?>"
                                    data-bs-target="#add_attachment">
                                                 <span class="svg-icon svg-icon-2"><svg width="24"
                                                                                        height="24"
@@ -104,17 +104,17 @@
                                                                     </span>
                                     <!--end::Svg Icon-->
                                 </a>
-                            @endif
+                            <?php endif; ?>
 
 
                             <a href="javascript:;" class="btn btn-light mr-2">
                                 <span
-                                    class="badge badge-light">{{\Carbon\Carbon::parse($note->reminder_date)->diffForHumans()}}</span>
+                                    class="badge badge-light"><?php echo e(\Carbon\Carbon::parse($note->reminder_date)->diffForHumans()); ?></span>
                             </a>
 
                             <a href="javascript:;" class="btn btn-light mr-2 comments_btn"
-                               data-url="{{ route('notes.add.comment' , $note->id)}}"
-                               data-fetch-url="{{ route('notes.get.comments' , $note->id)}}"
+                               data-url="<?php echo e(route('notes.add.comment' , $note->id)); ?>"
+                               data-fetch-url="<?php echo e(route('notes.get.comments' , $note->id)); ?>"
                             >
                                 <!--begin::Svg Icon | path: C:/wamp64/www/keenthemes/core/html/src/media/icons/duotune/coding/cod007.svg-->
                                 <span class="svg-icon svg-icon-2"><svg xmlns="http://www.w3.org/2000/svg"
@@ -130,8 +130,8 @@
 																		</span>
                                 <!--end::Svg Icon--></a>
 
-                            @if($note->user->id == auth()->id())
-                                <a href="{{ route('notes.share.index' , $note->id ) }}" class="btn btn-light mr-2">
+                            <?php if($note->user->id == auth()->id()): ?>
+                                <a href="<?php echo e(route('notes.share.index' , $note->id )); ?>" class="btn btn-light mr-2">
                                 <span class="svg-icon svg-icon-2"><svg
                                         class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
@@ -144,11 +144,11 @@
                                 </a>
 
 
-                            @endif
+                            <?php endif; ?>
 
                             <a href="javascript:;" class="btn btn-light operation"
-                               data-url="{{ route('notes.favourite' , $note->id ) }}">
-                                @if($note->isUserFav() )
+                               data-url="<?php echo e(route('notes.favourite' , $note->id )); ?>">
+                                <?php if($note->isUserFav() ): ?>
                                     <span class="svg-icon svg-icon-2"
                                           style="color: red"><svg width="24"
                                                                   height="24"
@@ -161,7 +161,7 @@
                                                                                     fill="currentColor"/>
                                                                             </svg>
                                                                         </span>
-                                @else
+                                <?php else: ?>
                                     <span class="svg-icon svg-icon-2"><svg
                                             width="24" height="24"
                                             viewBox="0 0 24 24" fill="none"
@@ -171,16 +171,16 @@
                                                                                     fill="currentColor"/>
                                                                             </svg>
                                                                         </span>
-                                @endif
+                                <?php endif; ?>
                                 <!--end::Svg Icon-->
                             </a>
 
 
-                            @if($note->user->id == auth()->id())
+                            <?php if($note->user->id == auth()->id()): ?>
 
-                                @if($note->deleted_at)
+                                <?php if($note->deleted_at): ?>
                                     <a class="btn btn-light mr-2 text-center "
-                                       href="{{ route('notes.restore' , $note->id ) }}">
+                                       href="<?php echo e(route('notes.restore' , $note->id )); ?>">
                                 <span class="svg-icon svg-icon-2 mr-0">
 
                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -192,10 +192,10 @@
                                                                         </span>
                                     </a>
 
-                                @else
+                                <?php else: ?>
 
                                 <a class="btn btn-light mr-2 text-center delete"
-                                   data-url="{{ route('notes.destroy' , $note->id ) }}"
+                                   data-url="<?php echo e(route('notes.destroy' , $note->id )); ?>"
                                    href="javascript:;">
                                 <span class="svg-icon svg-icon-2 mr-0"><svg
                                         width="24" height="24"
@@ -213,8 +213,8 @@
                                                                             </svg>
                                                                         </span>
                                 </a>
-                                @endif
-                            @endif
+                                <?php endif; ?>
+                            <?php endif; ?>
 
                         </div>
 
@@ -231,7 +231,7 @@
 </div>
 
 
-@push('css')
+<?php $__env->startPush('css'); ?>
     <style>
         /*.row .ui-sortable-handle {*/
         /*    margin:  0 40px 0 0;*/
@@ -243,4 +243,5 @@
             margin: 0 3px;
         }
     </style>
-@endpush
+<?php $__env->stopPush(); ?>
+<?php /**PATH C:\xampp\htdocs\gproject\resources\views/notes/card.blade.php ENDPATH**/ ?>
