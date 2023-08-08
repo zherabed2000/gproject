@@ -12,7 +12,8 @@ class CategoriesController extends Controller
 {
     public function index()
     {
-        $data['categories'] = Category::query()->filter()->latest()->get();
+        $data['categories'] = Category::query()->where('user_id' , auth()->id())
+            ->filter()->latest()->get();
 
         return view('categories.index', $data);
     }
@@ -27,6 +28,7 @@ class CategoriesController extends Controller
         DB::beginTransaction();
         try {
             $data = $request->all();
+            $data['user_id'] = auth()->id();
             Category::query()->create($data);
             Session::flash('alert-success', 'Successfully created a new category');
             DB::commit();
@@ -48,6 +50,7 @@ class CategoriesController extends Controller
         DB::beginTransaction();
         try {
             $data = $request->all();
+            $data['user_id'] = auth()->id();
             Category::query()->findOrFail($id)->update($data);
             Session::flash('alert-success', 'Successfully  category updated');
             DB::commit();

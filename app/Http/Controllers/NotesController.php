@@ -33,7 +33,7 @@ class NotesController extends Controller
 
     public function create()
     {
-        $data['categories'] = Category::query()->get();
+        $data['categories'] = Category::query()->where('user_id' , auth()->id())->get();
         return view('notes.create', $data);
     }
 
@@ -58,7 +58,7 @@ class NotesController extends Controller
 
     public function edit($id)
     {
-        $data['categories'] = Category::query()->get();
+        $data['categories'] = Category::query()->where('user_id' , auth()->id())->get();
         $data['item'] = Note::query()->findOrFail($id);
         return view('notes.create', $data);
     }
