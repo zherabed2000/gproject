@@ -17,7 +17,7 @@ class FriendController extends Controller
         $data['friends'] = Friend::query()
             ->where(function ($q) {
                 $q->where('user_id', auth()->id())
-                    ->orWhere('user_id', auth()->id());
+                    ->orWhere('friend_id', auth()->id());
             })
             ->with('friend')->get();
 
