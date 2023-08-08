@@ -28,11 +28,11 @@
         
         <!--end::Col-->
         <!--begin::Col-->
-        <div class="col-3 mb-5 item">
+        <div class="col-4 mb-5 item">
             <!--begin::Card widget 15-->
             <div class="card card-flush h-xl-100">
                 <!--begin::Body-->
-                <div class="card-body py-9" style="background: <?php echo e($note->category->color ?? '#1e1e2d'); ?> !important;">
+                <div class="card-body py-9" style="background:#1e1e2d!important;">
                     <!--begin::Row-->
                     <div class="row gx-9 h-100">
                         <!--begin::Col-->
