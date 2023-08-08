@@ -1,15 +1,13 @@
-@extends('layouts.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <!--begin::Category-->
     <div class="card card-flush px-8 mb-5 mb-xl-10">
         <!--begin::Card header-->
-        <form action="{{ isset($item) ? route('users.update',$item->id) :route('users.store') }}" method="post" enctype="multipart/form-data">
-            @csrf
-            @if(isset($item))
-                @method('put')
-            @endif
+        <form action="<?php echo e(isset($item) ? route('users.update',$item->id) :route('users.store')); ?>" method="post" enctype="multipart/form-data">
+            <?php echo csrf_field(); ?>
+            <?php if(isset($item)): ?>
+                <?php echo method_field('put'); ?>
+            <?php endif; ?>
             <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                 <!--begin::Card title-->
                 <div class="card-title">
@@ -26,27 +24,27 @@
                 <div class="form-group">
                     <label>Avatar</label>
                     <input type="file" name="avatar" accept="image/*" class="form-control form-control-solid"
-                           value="{{isset($item)?@$item->avatar :''}}" placeholder="Add Avatar"
+                           value="<?php echo e(isset($item)?@$item->avatar :''); ?>" placeholder="Add Avatar"
                            required/>
                 </div>
 
                 <div class="form-group">
                     <label>Name<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="name" value="{{isset($item)?@$item->name :''}}"
+                    <input type="text" class="form-control" name="name" value="<?php echo e(isset($item)?@$item->name :''); ?>"
                            required/>
                 </div>
 
 
                 <div class="form-group">
                     <label>E-mail<span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" name="email" value="{{isset($item)?@$item->email :''}}"
+                    <input type="email" class="form-control" name="email" value="<?php echo e(isset($item)?@$item->email :''); ?>"
                            required/>
                 </div>
 
                 <div class="fv-row mb-8">
                     <label class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" name="is_admin"
-                               value="1" {{ isset($item) && $item->is_admin ? 'checked' : '' }} />
+                               value="1" <?php echo e(isset($item) && $item->is_admin ? 'checked' : ''); ?> />
                         <span class="form-check-label fw-semibold text-gray-700 fs-6 ms-1">Is Admin</span>
                     </label>
                 </div>
@@ -54,11 +52,11 @@
                 <div class="form-group">
                     <label>
                         Password
-                        @if(!isset($item))
+                        <?php if(!isset($item)): ?>
                             <span class="text-danger">*</span>
-                        @endif
+                        <?php endif; ?>
                     </label>
-                    <input type="password" class="form-control" name="password" @if(!isset($item)) required @endif/>
+                    <input type="password" class="form-control" name="password" <?php if(!isset($item)): ?> required <?php endif; ?>/>
                 </div>
 
 
@@ -77,4 +75,6 @@
     </div>
     <!--end::Category-->
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/gproject/resources/views/users/create.blade.php ENDPATH**/ ?>

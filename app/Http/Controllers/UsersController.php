@@ -28,6 +28,18 @@ class UsersController extends Controller
         try {
             $data = $request->all();
             $data['password'] = Hash::make($data['password']);
+
+            if ($request->hasFile('avatar')) {
+                $avatar = $request->file('avatar');
+                $format = $avatar->getExtension();
+                $name = $avatar->getClientOriginalName();
+
+                $full_name = $name . $format;
+                $avatar->move(public_path('avatars'), $full_name);
+
+                $data['avatar'] = "avatars/$full_name";
+            }
+
             User::query()->create($data);
             Session::flash('alert-success', 'Successfully created a new user');
             DB::commit();
@@ -56,6 +68,17 @@ class UsersController extends Controller
             } else {
                 $data['password'] = Hash::make($data['password']);
             }
+            if ($request->hasFile('avatar')) {
+                $avatar = $request->file('avatar');
+                $format = $avatar->getExtension();
+                $name = $avatar->getClientOriginalName();
+
+                $full_name = $name . $format;
+                $avatar->move(public_path('avatars'), $full_name);
+
+                $data['avatar'] = "avatars/$full_name";
+            }
+
             $user->update($data);
             Session::flash('alert-success', 'Successfully user updated');
             DB::commit();

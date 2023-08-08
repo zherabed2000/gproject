@@ -107,6 +107,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::group(['prefix' => 'share', 'as' => 'share.'], function () {
                 Route::get('/', [NotesController::class, 'share'])->name('index');
                 Route::post('/', [NotesController::class, 'shareStore'])->name('store');
+                Route::delete('/', [NotesController::class, 'destroyShare'])->name('destroy');
             });
 
         });

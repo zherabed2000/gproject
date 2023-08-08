@@ -28,7 +28,7 @@
         
         <!--end::Col-->
         <!--begin::Col-->
-        <div class="col-3 mb-5 item">
+        <div class="col-4 mb-5 item">
             <!--begin::Card widget 15-->
             <div class="card card-flush h-xl-100">
                 <!--begin::Body-->

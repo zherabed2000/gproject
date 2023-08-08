@@ -267,6 +267,26 @@ class NotesController extends Controller
 
     }
 
+    public function destroyShare($id)
+    {
+        try {
+            $note = NoteShare::query()->where([
+                'user_id' => auth()->id(),
+                'note_id' => $id,
+            ])->delete();
+            return response()->json([
+                'status' => true,
+                'message' => 'Successfully deleted a note'
+            ]);
+
+        }catch (Exception $exception){
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to delete a note'
+            ]);
+        }
+    }
+
     /////////////////////////////////////////////
     public function trash()
     {
