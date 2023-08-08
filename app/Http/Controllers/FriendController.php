@@ -14,7 +14,11 @@ class FriendController extends Controller
     public function index()
     {
         $data['users'] = User::query()->filter()->get();
-        $data['friends'] = Friend::query()->where('user_id', auth()->id())
+        $data['friends'] = Friend::query()
+            ->where(function ($q) {
+                $q->where('user_id', auth()->id())
+                    ->orWhere('user_id', auth()->id());
+            })
             ->with('friend')->get();
 
         return view('friends.index', $data);
