@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Note\ProfileRequest;
 use App\Http\Requests\Note\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -84,6 +85,44 @@ class UsersController extends Controller
             DB::commit();
         } catch (Exception $exception) {
             Session::flash('alert-danger', 'Failed to updated a user');
+            DB::rollBack();
+        }
+        return redirect()->back();
+    }
+
+    public function profileIndex()
+    {
+        $data['item'] = auth()->user();
+        return view('users.profile', $data);
+    }
+
+    public function profileUpdate( ProfileRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $data = $request->all();
+            $user = auth()->user();
+            if (!$request->filled('password')) {
+                $data['password'] = $user->password;
+            } else {
+                $data['password'] = Hash::make($data['password']);
+            }
+            if ($request->hasFile('avatar')) {
+                $avatar = $request->file('avatar');
+                $format = $avatar->getExtension();
+                $name = $avatar->getClientOriginalName();
+
+                $full_name = $name . $format;
+                $avatar->move(public_path('avatars'), $full_name);
+
+                $data['avatar'] = "avatars/$full_name";
+            }
+
+            $user->update($data);
+            Session::flash('alert-success', 'Profile Updated Successfully');
+            DB::commit();
+        } catch (Exception $exception) {
+            Session::flash('alert-danger', 'Failed to updated profile');
             DB::rollBack();
         }
         return redirect()->back();

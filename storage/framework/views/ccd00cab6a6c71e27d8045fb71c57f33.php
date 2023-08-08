@@ -430,7 +430,7 @@
 
                         <!--begin::Menu item-->
                         <div class="menu-item px-5 my-1">
-                            <a href="../../demo1/dist/account/settings.html"
+                            <a href="<?php echo e(route('profile.create')); ?>"
                                class="menu-link px-5">Account
                                 Settings</a>
                         </div>

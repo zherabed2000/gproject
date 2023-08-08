@@ -5,15 +5,13 @@
     <!--begin::Category-->
     <div class="card card-flush px-8 mb-5 mb-xl-10">
         <!--begin::Card header-->
-        <form action="{{ isset($item) ? route('users.update',$item->id) :route('users.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('profile.store') }}" method="post" enctype="multipart/form-data">
             @csrf
-            @if(isset($item))
-                @method('put')
-            @endif
+
             <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                 <!--begin::Card title-->
                 <div class="card-title">
-                    <h2>Add User</h2>
+                    <h2>Update Profile</h2>
 
                 </div>
 
@@ -40,14 +38,6 @@
                     <label>E-mail<span class="text-danger">*</span></label>
                     <input type="email" class="form-control" name="email" value="{{isset($item)?@$item->email :''}}"
                            required/>
-                </div>
-
-                <div class="fv-row mb-8">
-                    <label class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="is_admin"
-                               value="1" {{ isset($item) && $item->is_admin ? 'checked' : '' }} />
-                        <span class="form-check-label fw-semibold text-gray-700 fs-6 ms-1">Is Admin</span>
-                    </label>
                 </div>
 
                 <div class="form-group">

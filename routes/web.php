@@ -134,6 +134,10 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 
+    Route::group(['prefix' => 'profile' , 'as' => 'profile.'], function () {
+        Route::get('/', [UsersController::class, 'profileIndex'])->name('create');
+        Route::post('/', [UsersController::class, 'profileUpdate'])->name('store');
+    });
 });
 
 Route::get('/faq', function () {
